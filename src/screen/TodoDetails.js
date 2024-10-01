@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ThemedText from "../components/ThemedText";
 import ThemedTextInput from "../components/ThemedTextInput";
@@ -38,6 +38,10 @@ const TaskDetail = ({ route }) => {
   }, [title, description, completed]);
 
   const handleSave = () => {
+    if (!title.trim() || !description.trim()) {
+      Alert.alert("Validation Error", "Title and description cannot be empty.");
+      return;
+    }
     updateTodo(todo.id, { title, description, completed });
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     setSaveEnabled(false);
