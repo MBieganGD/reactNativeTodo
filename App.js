@@ -68,13 +68,7 @@ const MainFlow = () => {
         options={{
           tabBarLabel: "Home",
           title: "Home",
-          header: () => (
-            <Header
-              title="Home"
-              profileImage="https://your-image-url.com/profile.jpg"
-              showBackButton={false}
-            />
-          ),
+          header: () => <Header title="Home" showBackButton={false} />,
         }}
       />
       <Tab.Screen
@@ -83,7 +77,7 @@ const MainFlow = () => {
         options={{
           tabBarLabel: "Profile",
           title: "Profile",
-          headerShown: false,
+          header: () => <Header title="Profile" showBackButton={true} />,
         }}
       />
       <Tab.Screen

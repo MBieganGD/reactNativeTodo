@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Alert } from "react-native";
+import { StyleSheet, View } from "react-native";
 import MainContainer from "../components/container/MainContainer";
 import ThemedText from "../components/ThemedText";
 import ThemedTextInput from "../components/ThemedTextInput";
@@ -9,13 +9,14 @@ import { signIn } from "../api/auth";
 const SignInScreen = ({ navigation }) => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSignIn = async () => {
     try {
       await signIn(login, password);
       navigation.navigate("MainFlow");
     } catch (error) {
-      Alert.alert("Error", error.message);
+      setError(error.message);
     }
   };
 
@@ -37,6 +38,7 @@ const SignInScreen = ({ navigation }) => {
         secureTextEntry
         autoCapitalize={"none"}
       />
+      {error ? <ThemedText style={styles.errorText}>{error}</ThemedText> : null}
       <CustomButton title="Login" onPress={handleSignIn} />
     </MainContainer>
   );
@@ -49,13 +51,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
   },
-
   title: {
     fontSize: 24,
     marginBottom: 20,
   },
   input: {
     width: "100%",
+    marginBottom: 10,
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 10,
   },
 });
 
